@@ -3,95 +3,128 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#e16b3d" />
+    <meta name="theme-color" content="#760b19" />
     <meta name="description" content="重庆灿乐祥科技有限公司企业门户登录" />
     <meta property="og:title" content="灿乐祥动力网" />
-    <meta property="og:description" content="洞察产业趋势，连接商业增长" />
-    <meta property="og:image" content="http://www.yyy301.com:7777/assets/og.png" />
+    <meta property="og:description" content="灿见产业新势，乐享增长未来" />
+    <meta property="og:image" content="http://www.yyy301.com:8080/assets/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>灿乐祥动力网</title>
-    <link rel="stylesheet" href="../assets/site.css?v=20260814-1" />
+    <link rel="stylesheet" href="../assets/site.css?v=20260814-2" />
   </head>
-  <body>
-    <div class="login-page">
-      <header class="site-header" aria-label="网站页眉">
-        <div class="header-inner">
-          <a class="brand" href="./index.html" aria-label="灿乐祥动力网首页">
-            <span class="brand-mark" aria-hidden="true">C</span>
-            <span class="brand-text"><span class="brand-cn">灿乐祥</span><span class="brand-en">POWER NETWORK</span></span>
-          </a>
-          <a class="header-about-link" href="../about/index.html">关于灿乐祥</a>
-        </div>
+  <body class="home-body">
+    <div class="home-shell">
+      <header class="home-header" aria-label="网站页眉">
+        <a class="brand brand-light" href="./index.html" aria-label="灿乐祥动力网首页">
+          <span class="brand-mark" aria-hidden="true">C</span>
+          <span class="brand-text"><span class="brand-cn">灿乐祥</span><span class="brand-en">POWER NETWORK</span></span>
+        </a>
+        <nav class="home-nav" aria-label="首页导航">
+          <a href="../about/index.html#overview">公司概况</a>
+          <a href="../about/index.html#business">核心业务</a>
+          <a href="../about/index.html#contact">合作联系</a>
+        </nav>
+        <a class="header-enter" href="#access">进入平台</a>
       </header>
 
-      <main class="login-main">
-        <section class="brand-stage" aria-labelledby="brand-title">
-          <div class="stage-grid" aria-hidden="true"></div>
-          <div class="stage-content">
-            <p class="stage-badge">CANLEXIANG TECHNOLOGY</p>
-            <h2 class="stage-title" id="brand-title">洞见产业新势<br /><span>链接增长未来</span></h2>
-            <p class="stage-copy">聚合产业洞察、数据研究与数字化服务，为企业提供清晰、可靠、高效的增长支持。</p>
-            <div class="value-strip" aria-label="平台价值">
-              <div class="value-item"><strong>Link</strong><span>链接全球</span></div>
-              <div class="value-item"><strong>Insight</strong><span>洞察趋势</span></div>
-              <div class="value-item"><strong>Growth</strong><span>驱动增长</span></div>
+      <main>
+        <section class="home-hero" aria-labelledby="brand-title">
+          <div class="hero-copy-block">
+            <p class="hero-kicker">CANLEXIANG TECHNOLOGY · CHONGQING</p>
+            <h1 id="brand-title">灿见产业新势<br /><span>乐享增长未来</span></h1>
+            <p class="hero-lead">以高质量产业洞察为起点，连接数据、渠道与商业资源，让复杂的市场变化成为清晰的行动方向。</p>
+            <div class="hero-actions">
+              <a class="action-primary" href="#access">登录服务门户 <span aria-hidden="true">→</span></a>
+              <a class="action-secondary" href="../about/index.html">了解灿乐祥</a>
             </div>
           </div>
+
+          <aside class="hero-insight" aria-label="平台能力">
+            <div class="insight-index"><span>01</span><small>POWER OF INSIGHT</small></div>
+            <h2>让每一次商业判断<br />更接近真实市场</h2>
+            <div class="insight-list">
+              <div><strong>趋势</strong><span>追踪产业与消费变化</span></div>
+              <div><strong>数据</strong><span>形成可执行的研究结论</span></div>
+              <div><strong>连接</strong><span>协同平台与区域资源</span></div>
+            </div>
+          </aside>
+
+          <div class="hero-watermark" aria-hidden="true">CLX</div>
         </section>
 
-        <section class="login-card" aria-labelledby="login-title">
-          <p class="card-overline">WELCOME BACK</p>
-          <h1 id="login-title">欢迎登录</h1>
-          <p class="card-intro">登录灿乐祥动力网，进入灿乐祥科技服务门户。</p>
-
-          <div class="login-tabs" role="tablist" aria-label="登录方式">
-            <button class="login-tab active" id="phoneTab" type="button" role="tab" aria-selected="true" aria-controls="phonePanel">手机号快捷登录</button>
-            <button class="login-tab" id="accountTab" type="button" role="tab" aria-selected="false" aria-controls="accountPanel">账号密码登录</button>
+        <section class="access-section" id="access" aria-labelledby="login-title">
+          <div class="access-heading">
+            <p>MEMBER ACCESS</p>
+            <h2>进入灿乐祥<br />科技服务门户</h2>
+            <span>当前为演示登录入口，账号信息已在右侧登录区标注。</span>
           </div>
 
-          <div class="login-panel" id="phonePanel" role="tabpanel" aria-labelledby="phoneTab">
-            <form id="phoneLoginForm" novalidate>
-              <div class="field">
-                <label class="field-label" for="phone">手机号</label>
-                <div class="input-wrap"><input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="请输入手机号" aria-describedby="phoneMessage" /></div>
-              </div>
-              <div class="field">
-                <label class="field-label" for="smsCode">短信验证码</label>
-                <div class="code-row">
-                  <input id="smsCode" name="smsCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="请输入验证码" aria-describedby="phoneMessage" />
-                  <button class="code-button" id="getCodeButton" type="button">获取验证码</button>
-                </div>
-              </div>
-              <p class="form-message" id="phoneMessage" role="status" aria-live="polite"></p>
-              <button class="login-button" id="phoneLoginButton" type="submit" disabled>登 录</button>
-              <p class="phone-tip">手机号快捷登录功能正在建设中，当前请使用账号密码登录。</p>
-            </form>
-          </div>
+          <div class="login-surface">
+            <aside class="access-note" aria-label="演示账号信息">
+              <span class="access-note-label">DEMO ACCOUNT</span>
+              <h3>演示账号</h3>
+              <dl class="demo-credential">
+                <div><dt>账号</dt><dd><code>yyy301</code></dd></div>
+                <div><dt>密码</dt><dd><code>yyy301</code></dd></div>
+              </dl>
+              <p>此账号仅用于页面演示，正式业务请接入服务端认证。</p>
+            </aside>
 
-          <div class="login-panel" id="accountPanel" role="tabpanel" aria-labelledby="accountTab" hidden>
-          <form id="loginForm" novalidate>
-            <div class="field">
-              <label class="field-label" for="username">账号</label>
-              <div class="input-wrap"><input id="username" name="username" type="text" autocomplete="username" placeholder="请输入账号" aria-describedby="formMessage" required /></div>
-            </div>
-            <div class="field">
-              <label class="field-label" for="password">密码</label>
-              <div class="input-wrap">
-                <input class="password-input" id="password" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" aria-describedby="formMessage" required />
-                <button class="toggle-password" id="togglePassword" type="button" aria-label="显示密码">显示</button>
+            <section class="login-card">
+              <div class="login-card-heading">
+                <p>WELCOME BACK</p>
+                <h1 id="login-title">欢迎登录</h1>
               </div>
-            </div>
-            <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
-            <button class="login-button" id="loginButton" type="submit" disabled>登 录</button>
-          </form>
+
+              <div class="login-tabs" role="tablist" aria-label="登录方式">
+                <button class="login-tab active" id="accountTab" type="button" role="tab" aria-selected="true" aria-controls="accountPanel">账号密码</button>
+                <button class="login-tab" id="phoneTab" type="button" role="tab" aria-selected="false" aria-controls="phonePanel">手机快捷</button>
+              </div>
+
+              <div class="login-panel" id="accountPanel" role="tabpanel" aria-labelledby="accountTab">
+                <form id="loginForm" novalidate>
+                  <div class="field">
+                    <label class="field-label" for="username">账号</label>
+                    <div class="input-wrap"><input id="username" name="username" type="text" autocomplete="username" placeholder="请输入账号" aria-describedby="formMessage" required /></div>
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="password">密码</label>
+                    <div class="input-wrap">
+                      <input class="password-input" id="password" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" aria-describedby="formMessage" required />
+                      <button class="toggle-password" id="togglePassword" type="button" aria-label="显示密码">显示</button>
+                    </div>
+                  </div>
+                  <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+                  <button class="login-button" id="loginButton" type="submit" disabled><span>进入门户</span><span aria-hidden="true">→</span></button>
+                </form>
+              </div>
+
+              <div class="login-panel" id="phonePanel" role="tabpanel" aria-labelledby="phoneTab" hidden>
+                <form id="phoneLoginForm" novalidate>
+                  <div class="field">
+                    <label class="field-label" for="phone">手机号</label>
+                    <div class="input-wrap"><input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="请输入手机号" aria-describedby="phoneMessage" /></div>
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="smsCode">短信验证码</label>
+                    <div class="code-row">
+                      <input id="smsCode" name="smsCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="请输入验证码" aria-describedby="phoneMessage" />
+                      <button class="code-button" id="getCodeButton" type="button">获取验证码</button>
+                    </div>
+                  </div>
+                  <p class="form-message" id="phoneMessage" role="status" aria-live="polite"></p>
+                  <button class="login-button" id="phoneLoginButton" type="submit" disabled><span>进入门户</span><span aria-hidden="true">→</span></button>
+                  <p class="phone-tip">手机快捷登录正在建设中，请使用账号密码登录。</p>
+                </form>
+              </div>
+            </section>
           </div>
         </section>
       </main>
-      <footer class="login-footer">
+
+      <footer class="home-footer">
         <span>© <span id="currentYear"></span> 重庆灿乐祥科技有限公司 版权所有</span>
-        <span class="footer-separator" aria-hidden="true">·</span>
-        <a class="footer-about-link" href="../about/index.html">关于灿乐祥</a>
-        <span class="footer-separator" aria-hidden="true">·</span>
+        <a href="../about/index.html">关于灿乐祥</a>
         <a class="icp-link" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">渝ICP备2025066131号-1</a>
       </footer>
     </div>

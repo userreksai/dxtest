@@ -16,13 +16,15 @@ test("静态页面包含完整灿乐祥品牌内容与资源", async () => {
 
   assert.match(login, /<title>灿乐祥动力网<\/title>/);
   assert.match(login, /重庆灿乐祥科技有限公司/);
-  assert.match(login, /手机号快捷登录/);
+  assert.match(login, /演示账号/);
+  assert.match(login, /<code>yyy301<\/code>/);
+  assert.match(login, /手机快捷/);
   assert.match(login, /获取验证码/);
   assert.match(login, /href="\.\.\/about\/index\.html">关于灿乐祥<\/a>/);
   assert.match(login, /渝ICP备2025066131号-1/);
   assert.match(about, /洞察产业趋势/);
   assert.match(about, /核心业务/);
-  assert.match(about, /www\.yyy301\.com:7777/);
+  assert.match(about, /www\.yyy301\.com:8080/);
   assert.match(about, /run@ss308\.com/);
   assert.match(about, /yangxueli@ss308\.com/);
   assert.match(about, /qiuyi@ss308\.com/);
@@ -51,12 +53,16 @@ test("静态页面包含完整灿乐祥品牌内容与资源", async () => {
   assert.doesNotMatch(about, /canlexiang_portal_auth/);
   assert.doesNotMatch(aboutJs, /canlexiang_portal_auth|logoutButton/);
   assert.doesNotMatch(login + about, /亿邦|其他登录方式|马蹄社/);
-  assert.match(css, /--gold:#e16b3d/);
+  assert.match(css, /--red: #a41127/);
+  assert.match(css, /\.action-primary/);
+  assert.match(css, /\.login-surface/);
   assert.match(loginJs, /yyy301/);
 
   await Promise.all([
     access(new URL("public/assets/og.png", root)),
     access(new URL("nginx.example.conf", root)),
+    access(new URL("deploy/deploy.sh", root)),
+    access(new URL("deploy/nginx-canlexiang.conf", root)),
   ]);
 });
 
@@ -83,6 +89,9 @@ test("登录脚本只接受指定账号并跳转到介绍页", async () => {
   };
   vm.runInNewContext(source, context);
 
+  assert.equal(nodes.get("phonePanel").hidden, true);
+  assert.equal(nodes.get("accountPanel").hidden, false);
+  nodes.get("phoneTab").listeners.click();
   assert.equal(nodes.get("phonePanel").hidden, false);
   assert.equal(nodes.get("accountPanel").hidden, true);
   nodes.get("getCodeButton").listeners.click();
@@ -109,4 +118,21 @@ test("登录脚本只接受指定账号并跳转到介绍页", async () => {
   form.listeners.submit({ preventDefault() {} });
   assert.equal(store.get("canlexiang_portal_auth"), "yyy301");
   assert.equal(destination, "../about/index.html");
+});
+
+test("8080 端口部署配置完整且不再包含旧端口", async () => {
+  const [deployScript, nginxConfig, docs] = await Promise.all([
+    readFile(new URL("deploy/deploy.sh", root), "utf8"),
+    readFile(new URL("deploy/nginx-canlexiang.conf", root), "utf8"),
+    readFile(new URL("部署说明.md", root), "utf8"),
+  ]);
+
+  assert.match(nginxConfig, /listen 8080 default_server/);
+  assert.match(nginxConfig, /www\.yyy301\.com/);
+  assert.match(nginxConfig, /\/var\/www\/canlexiang\/current/);
+  assert.match(deployScript, /nginx -t/);
+  assert.match(deployScript, /systemctl reload nginx/);
+  assert.match(deployScript, /rollback/);
+  assert.match(docs, /sudo bash deploy\/deploy\.sh/);
+  assert.doesNotMatch(deployScript + nginxConfig + docs, /7777|8888|gf308|hanhai/);
 });
