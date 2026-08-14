@@ -6,6 +6,19 @@ if [[ "${EUID}" -ne 0 ]]; then
   exit 1
 fi
 
+info() {
+  printf '[灿乐祥部署] %s\n' "$1"
+}
+
+die() {
+  printf '[灿乐祥部署] 错误：%s\n' "$1" >&2
+  exit 1
+}
+
+require_file() {
+  [[ -f "$1" ]] || die "缺少文件：$1"
+}
+
 project_dir="${1:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 public_dir="${project_dir}/public"
 nginx_source="${project_dir}/deploy/nginx-canlexiang.conf"
@@ -20,12 +33,23 @@ release_dir="${release_root}/${release_id}"
 backup_dir="/var/backups/canlexiang/${release_id}"
 previous_release=""
 
-test -f "${public_dir}/login/index.html"
-test -f "${public_dir}/about/index.html"
-test -f "${public_dir}/assets/site.css"
-test -f "${public_dir}/assets/login.js"
-test -f "${public_dir}/assets/og.png"
-test -f "${nginx_source}"
+for command_name in nginx systemctl install cp grep ln readlink; do
+  command -v "${command_name}" >/dev/null 2>&1 || die "缺少命令 ${command_name}，请先安装 Nginx。"
+done
+
+info "项目目录：${project_dir}"
+require_file "${public_dir}/login/index.html"
+require_file "${public_dir}/about/index.html"
+require_file "${public_dir}/assets/site.css"
+require_file "${public_dir}/assets/login.js"
+require_file "${public_dir}/assets/og.png"
+require_file "${nginx_source}"
+
+if [[ -e "${current_link}" && ! -L "${current_link}" ]]; then
+  die "${current_link} 已存在但不是符号链接，请先人工处理。"
+fi
+
+info "站点文件检查通过，正在创建发布版本……"
 
 if [[ -L "${current_link}" ]]; then
   previous_release="$(readlink -f "${current_link}")"
@@ -68,6 +92,7 @@ nginx -t
 systemctl reload nginx
 trap - ERR
 
+info "Nginx 配置检查通过，服务已重新加载。"
 printf 'DEPLOYED_RELEASE=%s\n' "${release_dir}"
 printf 'SITE_URL=http://www.yyy301.com:8080/\n'
 printf 'BACKUP_DIR=%s\n' "${backup_dir}"

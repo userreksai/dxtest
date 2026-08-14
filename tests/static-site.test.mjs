@@ -61,6 +61,7 @@ test("静态页面包含完整灿乐祥品牌内容与资源", async () => {
   await Promise.all([
     access(new URL("public/assets/og.png", root)),
     access(new URL("nginx.example.conf", root)),
+    access(new URL("installclx.sh", root)),
     access(new URL("deploy/deploy.sh", root)),
     access(new URL("deploy/nginx-canlexiang.conf", root)),
   ]);
@@ -120,8 +121,9 @@ test("登录脚本只接受指定账号并跳转到介绍页", async () => {
   assert.equal(destination, "../about/index.html");
 });
 
-test("8080 端口部署配置完整且不再包含旧端口", async () => {
-  const [deployScript, nginxConfig, docs] = await Promise.all([
+test("8080 端口部署配置完整且独立安装脚本可自动拉取源码", async () => {
+  const [installer, deployScript, nginxConfig, docs] = await Promise.all([
+    readFile(new URL("installclx.sh", root), "utf8"),
     readFile(new URL("deploy/deploy.sh", root), "utf8"),
     readFile(new URL("deploy/nginx-canlexiang.conf", root), "utf8"),
     readFile(new URL("部署说明.md", root), "utf8"),
@@ -133,6 +135,13 @@ test("8080 端口部署配置完整且不再包含旧端口", async () => {
   assert.match(deployScript, /nginx -t/);
   assert.match(deployScript, /systemctl reload nginx/);
   assert.match(deployScript, /rollback/);
+  assert.match(deployScript, /require_file/);
+  assert.match(deployScript, /缺少文件/);
+  assert.match(installer, /https:\/\/github\.com\/userreksai\/dxtest\.git/);
+  assert.match(installer, /git clone --depth 1 --branch main/);
+  assert.match(installer, /deploy\/deploy\.sh/);
+  assert.match(installer, /安装目录不是 Git 仓库且不为空/);
   assert.match(docs, /sudo bash deploy\/deploy\.sh/);
-  assert.doesNotMatch(deployScript + nginxConfig + docs, /7777|8888|gf308|hanhai/);
+  assert.match(docs, /sudo bash installclx\.sh \/usr\/local\/clx\//);
+  assert.doesNotMatch(installer + deployScript + nginxConfig + docs, /7777|8888|gf308|hanhai/);
 });
