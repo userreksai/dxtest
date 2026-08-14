@@ -71,5 +71,5 @@
   });
   document.querySelector("#currentYear").textContent = new Date().getFullYear();
   updateButton();
-  activateMode("phone");
+  activateMode("account");
 })();
