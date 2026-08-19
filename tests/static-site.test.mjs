@@ -211,6 +211,10 @@ test("8080 端口部署配置完整且短信服务只通过 Nginx 代理", async
   assert.match(smsInstaller, /SMSBAO_API_KEY/);
   assert.match(smsInstaller, /read -rs smsbao_api_key/);
   assert.match(smsInstaller, /chmod 0640/);
+  assert.match(smsInstaller, /venv_is_ready/);
+  assert.match(smsInstaller, /bin\/python" -m pip install/);
+  assert.match(smsInstaller, /venv-incomplete-/);
+  assert.doesNotMatch(smsInstaller, /bin\/pip" install/);
   assert.match(systemdService, /127\.0\.0\.1:8091/);
   assert.match(systemdService, /--workers 1 --threads 8/);
   assert.match(systemdService, /EnvironmentFile=\/etc\/canlexiang\/sms\.env/);

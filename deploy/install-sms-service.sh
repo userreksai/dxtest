@@ -36,7 +36,7 @@ nginx_target=/etc/nginx/sites-available/canlexiang
 nginx_enabled=/etc/nginx/sites-enabled/canlexiang
 previous_release=""
 
-for command_name in python3 systemctl nginx install cp ln; do
+for command_name in python3 systemctl nginx install cp ln mv; do
   command -v "${command_name}" >/dev/null 2>&1 || die "缺少命令 ${command_name}。"
 done
 
@@ -65,15 +65,26 @@ trap rollback ERR
 install -d -o root -g root -m 0755 "${runtime_root}" "${release_root}" "${release_dir}"
 cp -a "${backend_source}/." "${release_dir}/"
 
-if [[ ! -x "${venv_dir}/bin/python" ]]; then
+venv_is_ready() {
+  [[ -x "${venv_dir}/bin/python" ]] &&
+    "${venv_dir}/bin/python" -m pip --version >/dev/null 2>&1
+}
+
+if ! venv_is_ready; then
+  if [[ -e "${venv_dir}" || -L "${venv_dir}" ]]; then
+    incomplete_venv="${runtime_root}/venv-incomplete-${release_id}"
+    info "检测到不完整的 Python 虚拟环境，已移至 ${incomplete_venv}。"
+    mv "${venv_dir}" "${incomplete_venv}"
+  fi
   info "正在创建 Python 虚拟环境……"
   if ! python3 -m venv "${venv_dir}"; then
     die "无法创建虚拟环境，请先安装：apt-get install -y python3-venv"
   fi
+  venv_is_ready || die "虚拟环境创建后仍缺少 pip，请安装 python3-venv 后重新运行。"
 fi
 
 info "正在安装 Python 运行依赖……"
-"${venv_dir}/bin/pip" install --disable-pip-version-check --no-input -r "${release_dir}/requirements.txt"
+"${venv_dir}/bin/python" -m pip install --disable-pip-version-check --no-input -r "${release_dir}/requirements.txt"
 
 install -d -o root -g www-data -m 0750 "${env_dir}"
 if [[ ! -f "${env_file}" ]]; then
