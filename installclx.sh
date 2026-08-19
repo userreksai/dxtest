@@ -49,4 +49,6 @@ fi
 
 info "源码准备完成，开始配置 Nginx 并发布站点……"
 bash "${target_dir}/deploy/deploy.sh" "${target_dir}"
+info "开始安装短信验证码服务……"
+bash "${target_dir}/deploy/install-sms-service.sh" "${target_dir}"
 info "安装完成：http://www.yyy301.com:8080/"

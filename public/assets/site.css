@@ -575,6 +575,66 @@ input:focus-visible {
   font-weight: 700;
 }
 
+.code-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.captcha-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 176px;
+  gap: 10px;
+}
+
+.captcha-row > input {
+  min-width: 0;
+}
+
+.captcha-visual {
+  position: relative;
+  height: 52px;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(79, 29, 39, 0.16);
+  border-radius: 2px;
+  background: #fff6ef;
+  cursor: pointer;
+}
+
+.captcha-visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.captcha-visual span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 246, 239, 0.92);
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.captcha-visual.loaded span {
+  display: none;
+}
+
+.captcha-visual:focus-visible {
+  outline: 3px solid rgba(164, 17, 39, 0.2);
+  outline-offset: 2px;
+}
+
+.captcha-hint {
+  margin: 7px 0 0;
+  color: #928789;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
 .form-message {
   min-height: 22px;
   margin: -4px 0 13px;

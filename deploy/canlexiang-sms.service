@@ -1,0 +1,29 @@
+[Unit]
+Description=Canlexiang SMS verification service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/canlexiang-sms/current
+EnvironmentFile=/etc/canlexiang/sms.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/canlexiang-sms/venv/bin/gunicorn --workers 1 --threads 8 --bind 127.0.0.1:8091 --timeout 20 --access-logfile - --error-logfile - wsgi:app
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+KillSignal=SIGTERM
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

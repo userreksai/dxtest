@@ -22,6 +22,7 @@ require_file() {
 project_dir="${1:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 public_dir="${project_dir}/public"
 nginx_source="${project_dir}/deploy/nginx-canlexiang.conf"
+sms_installer="${project_dir}/deploy/install-sms-service.sh"
 
 site_root=/var/www/canlexiang
 release_root="${site_root}/releases"
@@ -44,6 +45,10 @@ require_file "${public_dir}/assets/site.css"
 require_file "${public_dir}/assets/login.js"
 require_file "${public_dir}/assets/og.png"
 require_file "${nginx_source}"
+require_file "${project_dir}/backend/sms_service.py"
+require_file "${project_dir}/backend/requirements.txt"
+require_file "${project_dir}/deploy/canlexiang-sms.service"
+require_file "${sms_installer}"
 
 if [[ -e "${current_link}" && ! -L "${current_link}" ]]; then
   die "${current_link} 已存在但不是符号链接，请先人工处理。"
@@ -96,3 +101,4 @@ info "Nginx 配置检查通过，服务已重新加载。"
 printf 'DEPLOYED_RELEASE=%s\n' "${release_dir}"
 printf 'SITE_URL=http://www.yyy301.com:8080/\n'
 printf 'BACKUP_DIR=%s\n' "${backup_dir}"
+printf 'SMS_INSTALL_COMMAND=sudo bash %s %s\n' "${sms_installer}" "${project_dir}"

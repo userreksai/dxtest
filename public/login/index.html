@@ -10,7 +10,7 @@
     <meta property="og:image" content="http://www.yyy301.com:8080/assets/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>灿乐祥动力网</title>
-    <link rel="stylesheet" href="../assets/site.css?v=20260814-2" />
+    <link rel="stylesheet" href="../assets/site.css?v=20260819-1" />
   </head>
   <body class="home-body">
     <div class="home-shell">
@@ -106,15 +106,26 @@
                     <div class="input-wrap"><input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="请输入手机号" aria-describedby="phoneMessage" /></div>
                   </div>
                   <div class="field">
+                    <label class="field-label" for="captchaAnswer">安全验证</label>
+                    <div class="captcha-row">
+                      <input id="captchaAnswer" name="captchaAnswer" type="text" inputmode="numeric" autocomplete="off" placeholder="请输入计算结果" aria-describedby="captchaHint phoneMessage" />
+                      <button class="captcha-visual" id="refreshCaptcha" type="button" aria-label="刷新图形验证码">
+                        <img id="captchaImage" alt="图形验证码，点击刷新" />
+                        <span id="captchaLoading">加载中</span>
+                      </button>
+                    </div>
+                    <p class="captcha-hint" id="captchaHint">请输入图片中算式的计算结果，点击图片可刷新。</p>
+                  </div>
+                  <div class="field">
                     <label class="field-label" for="smsCode">短信验证码</label>
                     <div class="code-row">
-                      <input id="smsCode" name="smsCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="请输入验证码" aria-describedby="phoneMessage" />
+                      <input id="smsCode" name="smsCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="请输入6位验证码" aria-describedby="phoneMessage" />
                       <button class="code-button" id="getCodeButton" type="button">获取验证码</button>
                     </div>
                   </div>
                   <p class="form-message" id="phoneMessage" role="status" aria-live="polite"></p>
                   <button class="login-button" id="phoneLoginButton" type="submit" disabled><span>进入门户</span><span aria-hidden="true">→</span></button>
-                  <p class="phone-tip">手机快捷登录正在建设中，请使用账号密码登录。</p>
+                  <p class="phone-tip">验证码5分钟内有效。任何工作人员都不会向您索取验证码，请勿泄露。</p>
                 </form>
               </div>
             </section>
@@ -128,6 +139,6 @@
         <a class="icp-link" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">渝ICP备2025066131号-1</a>
       </footer>
     </div>
-    <script src="../assets/login.js" defer></script>
+    <script src="../assets/login.js?v=20260819-1" defer></script>
   </body>
 </html>
