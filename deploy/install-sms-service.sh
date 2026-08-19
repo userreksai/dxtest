@@ -83,8 +83,25 @@ if ! venv_is_ready; then
   venv_is_ready || die "虚拟环境创建后仍缺少 pip，请安装 python3-venv 后重新运行。"
 fi
 
+info "正在更新 Python 包管理工具……"
+if ! "${venv_dir}/bin/python" -m pip install --disable-pip-version-check --no-input --upgrade pip; then
+  info "默认 Python 软件源更新失败，正在改用官方 PyPI……"
+  if ! PIP_CONFIG_FILE=/dev/null "${venv_dir}/bin/python" -m pip --isolated install \
+    --disable-pip-version-check --no-input --index-url https://pypi.org/simple --upgrade pip; then
+    die "无法更新 pip，请检查服务器到 https://pypi.org/simple 的网络连接。"
+  fi
+fi
+
 info "正在安装 Python 运行依赖……"
-"${venv_dir}/bin/python" -m pip install --disable-pip-version-check --no-input -r "${release_dir}/requirements.txt"
+if ! "${venv_dir}/bin/python" -m pip install --disable-pip-version-check --no-input \
+  -r "${release_dir}/requirements.txt"; then
+  info "默认 Python 软件源依赖解析失败，正在改用官方 PyPI……"
+  if ! PIP_CONFIG_FILE=/dev/null "${venv_dir}/bin/python" -m pip --isolated install \
+    --disable-pip-version-check --no-input --index-url https://pypi.org/simple \
+    -r "${release_dir}/requirements.txt"; then
+    die "无法安装 Python 运行依赖，请检查 PyPI 网络连接及 requirements.txt。"
+  fi
+fi
 
 install -d -o root -g www-data -m 0750 "${env_dir}"
 if [[ ! -f "${env_file}" ]]; then
