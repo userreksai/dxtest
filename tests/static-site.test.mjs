@@ -182,10 +182,11 @@ test("登录脚本支持演示账号和服务器短信验证码登录", async ()
 });
 
 test("8080 端口部署配置完整且短信服务只通过 Nginx 代理", async () => {
-  const [installer, deployScript, smsInstaller, systemdService, nginxConfig, docs] = await Promise.all([
+  const [installer, deployScript, smsInstaller, smsRequirements, systemdService, nginxConfig, docs] = await Promise.all([
     readFile(new URL("installclx.sh", root), "utf8"),
     readFile(new URL("deploy/deploy.sh", root), "utf8"),
     readFile(new URL("deploy/install-sms-service.sh", root), "utf8"),
+    readFile(new URL("backend/requirements.txt", root), "utf8"),
     readFile(new URL("deploy/canlexiang-sms.service", root), "utf8"),
     readFile(new URL("deploy/nginx-canlexiang.conf", root), "utf8"),
     readFile(new URL("部署说明.md", root), "utf8"),
@@ -215,6 +216,9 @@ test("8080 端口部署配置完整且短信服务只通过 Nginx 代理", async
   assert.match(smsInstaller, /bin\/python" -m pip install/);
   assert.match(smsInstaller, /venv-incomplete-/);
   assert.doesNotMatch(smsInstaller, /bin\/pip" install/);
+  assert.match(smsInstaller, /--upgrade pip/);
+  assert.match(smsInstaller, /https:\/\/pypi\.org\/simple/);
+  assert.match(smsRequirements, /^blinker>=1\.9,<2$/m);
   assert.match(systemdService, /127\.0\.0\.1:8091/);
   assert.match(systemdService, /--workers 1 --threads 8/);
   assert.match(systemdService, /EnvironmentFile=\/etc\/canlexiang\/sms\.env/);
